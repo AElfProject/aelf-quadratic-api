@@ -96,6 +96,7 @@ namespace QuadraticVoteApiHost
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "QuadraticVote API");
             });
             app.UseAbpSerilogEnrichers();
+            app.UseUnitOfWork();
             app.UseConfiguredEndpoints();
         }
     }

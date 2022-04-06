@@ -7,7 +7,6 @@ using QuadraticVote.Application.Dtos.QuadraticVote;
 using QuadraticVote.Domain.Entities;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
-using Volo.Abp.Uow;
 
 namespace QuadraticVote.Application.Services.Impl
 {
@@ -60,7 +59,6 @@ namespace QuadraticVote.Application.Services.Impl
             long totalSupportArea;
             if (input.Page >= 0 && input.Size > 0)
             {
-                using var uow = UnitOfWorkManager.Begin(new AbpUnitOfWorkOptions());
                 totalCount = await _projectRoundInfosRepository.CountAsync(ProjectQuery(round, input.IsWithBanned));
                 var queryable = await _projectRoundInfosRepository.GetQueryableAsync();
                 roundProjectList =
@@ -68,7 +66,6 @@ namespace QuadraticVote.Application.Services.Impl
                         .Take(input.Size).ToList();
                 queryable = await _projectRoundInfosRepository.GetQueryableAsync();
                 totalSupportArea = queryable.Where(p => p.RoundNumber == round && p.IsBanned!).Sum(p => p.SupportArea);
-                await uow.CompleteAsync();
             }
             else
             {
