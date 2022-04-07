@@ -78,6 +78,7 @@ namespace QuadraticVote.Application.Services.Impl
             var supportUnit = (decimal)totalSupport / totalSupportArea;
             return new PageProjectInfos
             {
+                Round = round,
                 TotalCount = totalCount,
                 ProjectList = roundProjectList.Select(p => new ProjectInfoDto
                 {

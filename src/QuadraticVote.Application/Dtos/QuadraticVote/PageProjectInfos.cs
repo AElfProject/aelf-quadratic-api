@@ -6,6 +6,7 @@ namespace QuadraticVote.Application.Dtos.QuadraticVote
     {
         public List<ProjectInfoDto> ProjectList { get; set; }
         public int TotalCount { get; set; }
+        public long Round { get; set; }
     } 
     
     public class ProjectInfoDto
