@@ -28,6 +28,7 @@ namespace QuadraticVote.ContractEventHandler
         {
             var configuration = context.Services.GetConfiguration();
             context.Services.AddHostedService<QuadraticVoteHostedService>();
+
             Configure<AbpRabbitMqOptions>(options =>
             {
                 var messageQueueConfig = configuration.GetSection("MessageQueue");

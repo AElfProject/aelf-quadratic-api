@@ -18,6 +18,6 @@
 
 
     <ItemGroup>
-      <ProjectReference Include="..\QuadraticVote.Domain\QuadraticVote.Domain.csproj" />
+        <ProjectReference Include="..\QuadraticVote.Domain\QuadraticVote.Domain.csproj" />
     </ItemGroup>
 </Project>

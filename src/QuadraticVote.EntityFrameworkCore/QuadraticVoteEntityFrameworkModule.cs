@@ -1,4 +1,5 @@
 ﻿using System;
+using AElf.AElfNode.EventHandler.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using QuadraticVote.Domain;
 using Volo.Abp;
@@ -10,6 +11,7 @@ namespace QuadraticVote.EntityFrameworkCore
 {
     [DependsOn(
         typeof(QuadraticVoteDomainModule),
+        typeof(AElfNodeEventHandlerEntityFrameworkCoreModule),
         typeof(AbpEntityFrameworkCoreMySQLModule)
     )]
     public class QuadraticVoteEntityFrameworkModule : AbpModule

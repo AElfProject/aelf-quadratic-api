@@ -1,18 +1,25 @@
+using AElf.AElfNode.EventHandler.Core.Domains.Entities;
+using AElf.AElfNode.EventHandler.EntityFrameworkCore;
+using AElf.AElfNode.EventHandler.EntityFrameworkCore.Extensions;
 using Microsoft.EntityFrameworkCore;
 using QuadraticVote.Domain;
 using QuadraticVote.Domain.Entities;
 using Volo.Abp.Data;
+using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.Modeling;
 
 namespace QuadraticVote.EntityFrameworkCore
 {
+    [ReplaceDbContext(typeof(IAElfNodeDbContext))]
     [ConnectionStringName("Default")]
-    public class QuadraticVoteDbContext : AbpDbContext<QuadraticVoteDbContext>
+    public class QuadraticVoteDbContext : AbpDbContext<QuadraticVoteDbContext>, IAElfNodeDbContext
     {
         public DbSet<Project> ProjectRoundInfos { get; set; }
         public DbSet<Round> RoundInfos { get; set; }
         public DbSet<UserProjectInfo> UserProjectInfos { get; set; }
+        public DbSet<SaveData> SaveData { get; }
+        public DbSet<TransactionWithLogsInfo> TransactionWithLogsInfos { get; }
 
         public QuadraticVoteDbContext(DbContextOptions<QuadraticVoteDbContext> options) : base(options)
         {
@@ -21,6 +28,9 @@ namespace QuadraticVote.EntityFrameworkCore
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            /* AElf chain scan fork check */
+            builder.ConfigureAElfLibTransactionManagement();
+            
             builder.Entity<Project>(b =>
             {
                 b.ToTable(QuadraticVoteConsts.DbTablePrefix + "Project", QuadraticVoteConsts.DbSchema);
@@ -45,5 +55,7 @@ namespace QuadraticVote.EntityFrameworkCore
                 b.ConfigureByConvention();
             });
         }
+
+       
     }
 }
