@@ -65,7 +65,7 @@ namespace QuadraticVote.Application.Services.Impl
                     queryable.Where(ProjectQuery(round, input.IsWithBanned)).Skip(input.Page * input.Size)
                         .Take(input.Size).ToList();
                 queryable = await _projectRoundInfosRepository.GetQueryableAsync();
-                totalSupportArea = queryable.Where(p => p.RoundNumber == round && p.IsBanned!).Sum(p => p.SupportArea);
+                totalSupportArea = queryable.Where(p => p.RoundNumber == round && !p.IsBanned).Sum(p => p.SupportArea);
             }
             else
             {

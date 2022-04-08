@@ -118,6 +118,11 @@ namespace QuadraticVote.Application
             var theSecondProject = projectsInRoundOne[1];
             var projectTwo = projects.ProjectList.SingleOrDefault(x => x.ProjectId == theSecondProject);
             projectTwo.ShouldNotBeNull();
+            var totalSupport = QuadraticVoteTestConstants.RoundOneTotalSupport;
+            var voteValue = totalSupport * (decimal)QuadraticVoteTestConstants.ProjectTwoRoundOneSupportArea /
+                            (QuadraticVoteTestConstants.ProjectOneRoundOneSupportArea +
+                             QuadraticVoteTestConstants.ProjectTwoRoundOneSupportArea);
+            projectTwo.SupportValue.ShouldBe(GetDataWithDecimal(voteValue));
         }
 
         [Fact]
