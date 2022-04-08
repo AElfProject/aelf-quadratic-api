@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AElf.AElfNode.EventHandler.BackgroundJob;
 using AElf.AElfNode.EventHandler.BackgroundJob.Processors;
 using AElf.Contracts.QuadraticFunding;
+using QuadraticVote.ContractEventHandler.Helpers;
 using QuadraticVote.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
 using Project = QuadraticVote.Domain.Entities.Project;
@@ -23,12 +24,13 @@ namespace QuadraticVote.ContractEventHandler.Processors
 
         protected override async Task HandleEventAsync(Voted eventDetailsEto, EventContext txInfoDto)
         {
+            var projectId = ProjectHelper.ModifyProjectId(eventDetailsEto.Project);
             var projectInfo = await _projectRoundInfosRepository.FindAsync(x =>
-                eventDetailsEto.Round == x.RoundNumber && eventDetailsEto.Project == x.ProjectId);
+                eventDetailsEto.Round == x.RoundNumber && projectId == x.ProjectId);
             if (projectInfo == null)
             {
                 throw new Exception(
-                    $"Lack project Info in db, project: {eventDetailsEto.Project}, round: {eventDetailsEto.Round}");
+                    $"Lack project Info in db, project: {projectId}, round: {eventDetailsEto.Round}");
             }
 
             projectInfo.Grant += eventDetailsEto.Grants;
@@ -39,7 +41,7 @@ namespace QuadraticVote.ContractEventHandler.Processors
             var user = eventDetailsEto.Account.ToBase58();
             var userInfo = await _userProjectInfosRepository.FindAsync(x =>
                 eventDetailsEto.Round == x.RoundNumber && user == x.User &&
-                eventDetailsEto.Project == x.ProjectId);
+                projectId == x.ProjectId);
             if (userInfo != null)
             {
                 userInfo.Vote += eventDetailsEto.Vote;
@@ -52,7 +54,7 @@ namespace QuadraticVote.ContractEventHandler.Processors
             {
                 User = user,
                 RoundNumber = eventDetailsEto.Round,
-                ProjectId = eventDetailsEto.Project,
+                ProjectId = projectId,
                 Vote = eventDetailsEto.Vote,
                 Cost = eventDetailsEto.Cost
             });

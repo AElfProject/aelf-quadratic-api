@@ -75,7 +75,7 @@ namespace QuadraticVote.Application.Services.Impl
                 totalSupportArea = roundProjectList.Where(p => !p.IsBanned).Sum(p => p.SupportArea);
             }
 
-            var supportUnit = (decimal)totalSupport / totalSupportArea;
+            var supportUnit = totalSupportArea == 0 ? 0 : (decimal)totalSupport / totalSupportArea;
             return new PageProjectInfos
             {
                 Round = round,
