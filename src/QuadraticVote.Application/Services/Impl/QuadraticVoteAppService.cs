@@ -39,8 +39,8 @@ namespace QuadraticVote.Application.Services.Impl
             {
                 Round = round,
                 TotalVotes = roundProjectList.Sum(p => p.Vote),
-                TotalSupportValue = roundInfo.TotalSupport,
-                TotalVoteValue = roundProjectList.Sum(p => p.Grant)
+                TotalSupportValue = CalculateWithDecimal(roundInfo.TotalSupport),
+                TotalVoteValue = CalculateWithDecimal(roundProjectList.Sum(p => p.Grant))
             };
         }
 

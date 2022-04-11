@@ -28,17 +28,18 @@ namespace QuadraticVote.Application
                     Round = round
                 });
             statisticInfo.Round.ShouldBe(round);
-            
+
             // Project three is banned in round one
             var roundTotalVote = QuadraticVoteTestConstants.ProjectOneRoundOneVotes +
                                  QuadraticVoteTestConstants.ProjectTwoRoundOneVotes;
             statisticInfo.TotalVotes.ShouldBe(roundTotalVote);
             var roundTotalGrant = QuadraticVoteTestConstants.ProjectOneRoundOneGrant +
                                   QuadraticVoteTestConstants.ProjectTwoRoundOneGrant;
-            statisticInfo.TotalVoteValue.ShouldBe(roundTotalGrant);
-            statisticInfo.TotalSupportValue.ShouldBe(QuadraticVoteTestConstants.RoundOneTotalSupport);
+            statisticInfo.TotalVoteValue.ShouldBe(GetDataWithDecimal(roundTotalGrant));
+            statisticInfo.TotalSupportValue.ShouldBe(
+                GetDataWithDecimal(QuadraticVoteTestConstants.RoundOneTotalSupport));
         }
-        
+
         [Fact]
         public async Task GetStatisticInfoByRound_Without_Round_Should_Get_Latest_Round_Data()
         {
@@ -47,14 +48,15 @@ namespace QuadraticVote.Application
             var targetRound = QuadraticVoteTestConstants.Rounds.Max();
             statisticInfo.Round.ShouldBe(targetRound);
             var roundTotalVote = QuadraticVoteTestConstants.ProjectOneRoundTwoVotes +
-                                 QuadraticVoteTestConstants.ProjectTwoRoundTwoVotes + 
+                                 QuadraticVoteTestConstants.ProjectTwoRoundTwoVotes +
                                  QuadraticVoteTestConstants.ProjectThreeRoundTwoVotes;
             statisticInfo.TotalVotes.ShouldBe(roundTotalVote);
             var roundTotalGrant = QuadraticVoteTestConstants.ProjectOneRoundTwoGrant +
-                                  QuadraticVoteTestConstants.ProjectTwoRoundTwoGrant + 
+                                  QuadraticVoteTestConstants.ProjectTwoRoundTwoGrant +
                                   QuadraticVoteTestConstants.ProjectThreeRoundTwoGrant;
-            statisticInfo.TotalVoteValue.ShouldBe(roundTotalGrant);
-            statisticInfo.TotalSupportValue.ShouldBe(QuadraticVoteTestConstants.RoundTwoTotalSupport);
+            statisticInfo.TotalVoteValue.ShouldBe(GetDataWithDecimal(roundTotalGrant));
+            statisticInfo.TotalSupportValue.ShouldBe(
+                GetDataWithDecimal(QuadraticVoteTestConstants.RoundTwoTotalSupport));
         }
 
         [Fact]
@@ -96,12 +98,12 @@ namespace QuadraticVote.Application
                             (QuadraticVoteTestConstants.ProjectOneRoundOneSupportArea +
                              QuadraticVoteTestConstants.ProjectTwoRoundOneSupportArea);
             projectOne.SupportValue.ShouldBe(GetDataWithDecimal(voteValue));
-            
+
             var theThirdProject = projectsInRoundOne[2];
             var projectThree = projects.ProjectList.Single(x => x.ProjectId == theThirdProject);
             projectThree.SupportValue.ShouldBe(0m);
         }
-        
+
         [Fact]
         public async Task GetProjectInfoByRound_With_Page_Should_Get_Right_Data()
         {
@@ -166,9 +168,10 @@ namespace QuadraticVote.Application
             var userProjectOneInfo =
                 userInfos.UserProjectList.Single(x => x.ProjectId == QuadraticVoteTestConstants.ProjectOneId);
             userProjectOneInfo.Vote.ShouldBe(QuadraticVoteTestConstants.RanniRoundOneToProjectOneVote);
-            userProjectOneInfo.Cost.ShouldBe(GetDataWithDecimal(QuadraticVoteTestConstants.RanniRoundOneToProjectOneCost));
+            userProjectOneInfo.Cost.ShouldBe(
+                GetDataWithDecimal(QuadraticVoteTestConstants.RanniRoundOneToProjectOneCost));
         }
-        
+
         [Fact]
         public async Task GetUserInfoByRound_Without_Round_Should_Get_Right_Data()
         {
@@ -182,7 +185,8 @@ namespace QuadraticVote.Application
             var userProjectThreeInfo =
                 userInfos.UserProjectList.Single(x => x.ProjectId == QuadraticVoteTestConstants.ProjectThreeId);
             userProjectThreeInfo.Vote.ShouldBe(QuadraticVoteTestConstants.SunRoundTwoToProjectThreeVote);
-            userProjectThreeInfo.Cost.ShouldBe(GetDataWithDecimal(QuadraticVoteTestConstants.SunRoundTwoToProjectThreeCost));
+            userProjectThreeInfo.Cost.ShouldBe(
+                GetDataWithDecimal(QuadraticVoteTestConstants.SunRoundTwoToProjectThreeCost));
         }
 
         private decimal GetDataWithDecimal(decimal data)
