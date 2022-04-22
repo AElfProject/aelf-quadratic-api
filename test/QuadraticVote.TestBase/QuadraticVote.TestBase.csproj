@@ -3,15 +3,15 @@
   <Import Project="..\..\common.props" />
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>QuadraticVote</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Authorization" Version="4.4.3" />
-    <PackageReference Include="Volo.Abp.BackgroundJobs.Abstractions" Version="4.4.3" />
-    <PackageReference Include="Volo.Abp.TestBase" Version="4.4.3" />
-    <PackageReference Include="Volo.Abp.Autofac" Version="4.4.3" />
+    <PackageReference Include="Volo.Abp.Authorization" Version="5.2.0" />
+    <PackageReference Include="Volo.Abp.BackgroundJobs.Abstractions" Version="5.2.0" />
+    <PackageReference Include="Volo.Abp.TestBase" Version="5.2.0" />
+    <PackageReference Include="Volo.Abp.Autofac" Version="5.2.0" />
     <ProjectReference Include="..\..\src\QuadraticVote.Domain\QuadraticVote.Domain.csproj" />
   </ItemGroup>
 
