@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\AElf.AElfNode.EventHandler.BackgroundJob\AElf.AElfNode.EventHandler.BackgroundJob.csproj" />
+    </ItemGroup>
+
+</Project>
